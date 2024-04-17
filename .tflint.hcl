@@ -1,12 +1,12 @@
 plugin "aws" {
     enabled = true
-    version = "0.23.1"
+    version = "0.30.0"
     source  = "github.com/terraform-linters/tflint-ruleset-aws"
 }
 
 plugin "terraform" {
     enabled = true
-    version = "0.3.0"
+    version = "0.6.0"
     source  = "github.com/terraform-linters/tflint-ruleset-terraform"
 }
 
@@ -15,11 +15,11 @@ rule "terraform_comment_syntax" {
 }
 
 rule "terraform_documented_outputs" {
-    enabled = false
+    enabled = true
 }
 
 rule "terraform_documented_variables" {
-    enabled = false
+    enabled = true
 }
 
 rule "terraform_naming_convention" {
@@ -31,5 +31,5 @@ rule "terraform_unused_required_providers" {
 }
 
 rule "terraform_standard_module_structure" {
-    enabled = false
+    enabled = true
 }
