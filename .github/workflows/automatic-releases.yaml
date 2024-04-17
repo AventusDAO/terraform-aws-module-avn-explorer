@@ -11,4 +11,4 @@ jobs:
     with:
       default_bump: patch
     secrets:
-      envPat: ${{ secrets.VERENFT_CI_AGENT_TOKEN }}
+      envPat: ${{ secrets.GITHUB_TOKEN }}
