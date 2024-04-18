@@ -1,5 +1,5 @@
 
-data "aws_caller_identity" "current" {}
+data "aws_caller_identity" "this" {}
 
 data "aws_iam_policy_document" "this" {
   statement {
@@ -8,12 +8,11 @@ data "aws_iam_policy_document" "this" {
       "secretsmanager:GetSecretValue",
       "secretsmanager:DescribeSecret",
     ]
-    resources = concat(
-      [
-        aws_secretsmanager_secret.this[each.key].arn
-      ],
-      try(each.value.secret_manager_arns, [])
-    )
+    resources = each.value.service_account_name == "nuke" ? [
+      for k, v in local.explorer_components : aws_secretsmanager_secret.this[k].arn
+      ] : [
+      aws_secretsmanager_secret.this[each.key].arn
+    ]
   }
 
   for_each = local.explorer_components

@@ -16,6 +16,7 @@ variable "db_settings" {
   type = object({
     db_subnet_group_name = string
     name                 = optional(string, "avn-explorer")
+    create_cluster       = optional(bool, true)
     engine               = optional(string, "aurora-postgresql")
     engine_version       = optional(string, "14.10")
     ca_cert_identifier   = optional(string, "rds-ca-rsa2048-g1")
@@ -71,8 +72,16 @@ variable "eks_iam_role_settings" {
 variable "secret_manager_settings" {
   description = "AWS Secret Manager prefix"
   type = object({
-    prefix = optional(string, "avn-explorer")
+    prefix                  = optional(string, "avn-explorer")
+    recovery_window_in_days = optional(number, 30)
+    kms_key_id              = optional(string, null)
   })
+
+  default = {
+    prefix                  = "avn-explorer"
+    recovery_window_in_days = 30
+    kms_key_id              = null
+  }
 }
 
 variable "tags" {
