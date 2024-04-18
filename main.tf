@@ -3,6 +3,7 @@ module "db" {
   version = "7.6.2"
 
   name               = var.db_settings.name
+  create_cluster     = var.db_settings.create_cluster
   engine             = var.db_settings.engine
   engine_version     = var.db_settings.engine_version
   ca_cert_identifier = var.db_settings.ca_cert_identifier
@@ -45,11 +46,11 @@ module "db" {
 #
 module "eks_iam_role" {
   source  = "cloudposse/eks-iam-role/aws"
-  version = "v1.1.0"
+  version = "v2.1.1"
 
   environment                 = var.environment
   name                        = "${var.eks_iam_role_settings.prefix}-${each.value.service_account_name}-sa"
-  aws_account_number          = data.aws_caller_identity.current.account_id
+  aws_account_number          = data.aws_caller_identity.this.account_id
   eks_cluster_oidc_issuer_url = var.eks_iam_role_settings.eks_cluster_oidc_issuer_url
   service_account_name        = each.value.service_account_name
   service_account_namespace   = var.eks_iam_role_settings.service_account_namespace
@@ -62,9 +63,10 @@ module "eks_iam_role" {
 }
 
 resource "aws_secretsmanager_secret" "this" {
-  name = "${var.secret_manager_settings.prefix}/${each.key}"
+  name                    = "${var.secret_manager_settings.prefix}/${each.key}"
+  recovery_window_in_days = var.secret_manager_settings.recovery_window_in_days
+  kms_key_id              = var.secret_manager_settings.kms_key_id
+  tags                    = var.tags
 
   for_each = local.explorer_components
-
-  tags = var.tags
 }
