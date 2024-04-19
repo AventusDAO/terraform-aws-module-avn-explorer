@@ -3,6 +3,12 @@ variable "environment" {
   type        = string
 }
 
+variable "monitoring_sns_topic" {
+  description = "Monitoring SNS Topic list"
+  type        = list(string)
+  default     = []
+}
+
 variable "vpc_settings" {
   description = "VPC Settings"
   type = object({
