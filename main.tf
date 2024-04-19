@@ -52,12 +52,12 @@ module "monitoring" {
   for_each = toset(module.db.cluster_members)
 }
 
-resource "aws_secretsmanager_secret" "rds" {
+resource "aws_secretsmanager_secret" "this" {
   name = "${var.secret_manager_settings.prefix}/rds_db_config"
 }
 
-resource "aws_secretsmanager_secret_version" "rds" {
-  secret_id = aws_secretsmanager_secret.rds.id
+resource "aws_secretsmanager_secret_version" "this" {
+  secret_id = aws_secretsmanager_secret.this.id
   secret_string = jsonencode(
     {
       username = module.db.cluster_master_username
