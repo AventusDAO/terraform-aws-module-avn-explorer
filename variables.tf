@@ -146,8 +146,8 @@ variable "db_settings" {
     engine_version          = optional(string, "16.2")
     ca_cert_identifier      = optional(string, "rds-ca-rsa2048-g1")
     family                  = optional(string, "aurora-postgresql14")
-    allowed_security_groups = optioanl(list(string), [])
-    allowed_cidr_blocks     = optioanl(list(string), [])
+    allowed_security_groups = optional(list(string), [])
+    allowed_cidr_blocks     = optional(list(string), [])
     instances = optional(any,
       {
         1 = {

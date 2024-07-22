@@ -1,6 +1,6 @@
 module "db" {
   source  = "terraform-aws-modules/rds-aurora/aws"
-  version = "7.6.2"
+  version = "7.7.1"
 
   name               = var.db_settings.name
   create_cluster     = var.db_settings.create_cluster
