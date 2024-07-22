@@ -19,105 +19,120 @@ variable "vpc_settings" {
 
 variable "explorer_components" {
   description = "AvN Explorer Components"
-  type = object({
-    archive = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    balances = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    fees = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    staking = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    summary = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    tokens = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    search = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    search-server = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    errors = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    nft = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    solochain-archive = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    solochain-search = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    account-monitor = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
-    nuke = optional({
-      enabled = optional(bool)
-      },
-      {
-        enabled = true
-      }
-    )
+  type = object(
+    {
+      archive = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      balances = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      fees = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      staking = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      summary = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      tokens = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      search = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      search-server = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      errors = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      nft = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      solochain-archive = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      solochain-search = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      account-monitor = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      nuke = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
   })
 }
 
