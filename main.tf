@@ -42,16 +42,16 @@ module "db" {
   tags = var.tags
 }
 
-module "monitoring" {
-  source = "git@github.com:Aventus-Network-Services/terraform-aws-rds-monitoring?ref=v0.1.0"
+# module "monitoring" {
+#   source = "git@github.com:Aventus-Network-Services/terraform-aws-rds-monitoring?ref=v0.1.0"
 
-  sns_topic         = var.monitoring_sns_topic
-  alarm_name_prefix = "${title(var.environment)}-${each.key}"
-  db_instance_id    = each.key
-  tags              = var.tags
+#   sns_topic         = var.monitoring_sns_topic
+#   alarm_name_prefix = "${title(var.environment)}-${each.key}"
+#   db_instance_id    = each.key
+#   tags              = var.tags
 
-  for_each = toset(module.db.cluster_members)
-}
+#   for_each = toset(module.db.cluster_members)
+# }
 
 resource "aws_secretsmanager_secret" "rds" {
   name = "${var.secret_manager_settings.prefix}/rds_db_config"
