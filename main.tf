@@ -103,3 +103,32 @@ resource "aws_secretsmanager_secret" "this" {
     if v.enabled
   }
 }
+
+
+module "opensearch" {
+  source = "git@github.com:Aventus-Network-Services/terraform-aws-module-opensearch.git?ref=v1.0.0"
+
+  name                    = var.opensearch_settings.name
+  enviroment              = local.environment
+  vpc_id                  = var.vpc_settings.vpc_id
+  subnet_ids              = var.opensearch_settings.subnet_ids
+  zone_awareness_enabled  = var.opensearch_settings.zone_awareness_enabled
+  engine_version          = var.opensearch_settings.engine_version
+  instance_type           = var.opensearch_settings.instance_type
+  instance_count          = var.opensearch_settings.instance_count
+  ebs_volume_size         = var.opensearch_settings.ebs_volume_size
+  ebs_iops                = var.opensearch_settings.ebs_iops
+  ebs_volume_type         = var.opensearch_settings.ebs_volume_type
+  encrypt_at_rest_enabled = var.opensearch_settings.encrypt_at_rest_enabled
+  security_groups         = var.opensearch_settings.security_groups
+  advanced_options = {
+    "rest.action.multi.allow_explicit_index" = "true"
+  }
+
+  tags = var.tags
+}
+
+resource "aws_opensearch_domain_policy" "this" {
+  domain_name     = module.opensearch.domain_name
+  access_policies = data.aws_iam_policy_document.os_explorer_policy.json
+}

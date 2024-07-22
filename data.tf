@@ -21,3 +21,21 @@ data "aws_iam_policy_document" "this" {
     if v.enabled
   }
 }
+
+data "aws_iam_policy_document" "os_explorer_policy" {
+  statement {
+    sid    = ""
+    effect = "Allow"
+    resources = [
+      "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${module.opensearch.domain_name}/*"
+    ]
+    actions = [
+      "es:*"
+    ]
+
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+  }
+}

@@ -186,6 +186,39 @@ variable "db_settings" {
   )
 }
 
+variable "opensearch_settings" {
+  description = "Opensearch Settings"
+  type = object({
+    enabled                 = optional(bool, true)
+    name                    = optional(string, "explorer")
+    subnet_ids              = list(string)
+    zone_awareness_enabled  = optional(bool, false)
+    engine_version          = optional(string, "OpenSearch_2.3")
+    instance_type           = optional(string, "m6g.large.search")
+    instance_count          = optional(number, 1)
+    ebs_volume_size         = optional(number, 100)
+    ebs_iops                = optional(number, 3000)
+    ebs_volume_type         = optional(string, "gp3")
+    encrypt_at_rest_enabled = optional(bool, true)
+    security_groups         = optional(list(string), [])
+  })
+
+  default = {
+    enabled                 = true
+    name                    = "explorer"
+    subnet_ids              = []
+    zone_awareness_enabled  = false
+    engine_version          = "OpenSearch_2.3"
+    instance_type           = "m6g.large.search"
+    instance_count          = 1
+    ebs_volume_size         = 100
+    ebs_iops                = 3000
+    ebs_volume_type         = "gp3"
+    encrypt_at_rest_enabled = true
+    security_groups         = []
+  }
+}
+
 variable "eks_iam_role_settings" {
   description = "EKS IAM Role Settings"
   type = object({
