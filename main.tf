@@ -1,6 +1,6 @@
 module "db" {
   source  = "terraform-aws-modules/rds-aurora/aws"
-  version = "7.6.2"
+  version = "7.7.1"
 
   name               = var.db_settings.name
   create_cluster     = var.db_settings.create_cluster
@@ -8,11 +8,13 @@ module "db" {
   engine_version     = var.db_settings.engine_version
   ca_cert_identifier = var.db_settings.ca_cert_identifier
   instances          = var.db_settings.instances
+  kms_key_id         = var.db_settings.kms_key_id
 
-  vpc_id                 = var.vpc_settings.vpc_id
-  db_subnet_group_name   = var.db_settings.db_subnet_group_name
-  create_db_subnet_group = false
-  vpc_security_group_ids = var.db_settings.security_group_ids
+  vpc_id                  = var.vpc_settings.vpc_id
+  db_subnet_group_name    = var.db_settings.db_subnet_group_name
+  create_db_subnet_group  = false
+  allowed_security_groups = var.db_settings.allowed_security_groups
+  allowed_cidr_blocks     = var.db_settings.allowed_cidr_blocks
 
   iam_database_authentication_enabled = var.db_settings.iam_database_authentication_enabled
   create_random_password              = var.db_settings.create_random_password
@@ -46,10 +48,10 @@ module "monitoring" {
 
   sns_topic         = var.monitoring_sns_topic
   alarm_name_prefix = "${title(var.environment)}-${each.key}"
-  db_instance_id    = each.key
+  db_instance_id    = each.value.id
   tags              = var.tags
 
-  for_each = toset(module.db.cluster_members)
+  for_each = module.db.cluster_instances
 }
 
 resource "aws_secretsmanager_secret" "rds" {
@@ -86,7 +88,10 @@ module "eks_iam_role" {
   ]
   tags = var.tags
 
-  for_each = local.explorer_components
+  for_each = {
+    for k, v in local.explorer_components : k => v
+    if v.enabled
+  }
 }
 
 resource "aws_secretsmanager_secret" "this" {
@@ -95,5 +100,38 @@ resource "aws_secretsmanager_secret" "this" {
   kms_key_id              = var.secret_manager_settings.kms_key_id
   tags                    = var.tags
 
-  for_each = local.explorer_components
+  for_each = {
+    for k, v in local.explorer_components : k => v
+    if v.enabled
+  }
+}
+
+
+module "opensearch" {
+  source = "git@github.com:Aventus-Network-Services/terraform-aws-module-opensearch.git?ref=v1.0.0"
+
+  name                       = var.opensearch_settings.name
+  enviroment                 = var.environment
+  vpc_id                     = var.vpc_settings.vpc_id
+  subnet_ids                 = var.opensearch_settings.subnet_ids
+  zone_awareness_enabled     = var.opensearch_settings.zone_awareness_enabled
+  engine_version             = var.opensearch_settings.engine_version
+  instance_type              = var.opensearch_settings.instance_type
+  instance_count             = var.opensearch_settings.instance_count
+  ebs_volume_size            = var.opensearch_settings.ebs_volume_size
+  ebs_iops                   = var.opensearch_settings.ebs_iops
+  ebs_volume_type            = var.opensearch_settings.ebs_volume_type
+  encrypt_at_rest_enabled    = var.opensearch_settings.encrypt_at_rest_enabled
+  encrypt_at_rest_kms_key_id = var.opensearch_settings.encrypt_at_rest_kms_key_id
+  security_groups            = var.opensearch_settings.allowed_security_groups
+  advanced_options = {
+    "rest.action.multi.allow_explicit_index" = "true"
+  }
+
+  tags = var.tags
+}
+
+resource "aws_opensearch_domain_policy" "this" {
+  domain_name     = module.opensearch.domain_name
+  access_policies = data.aws_iam_policy_document.os_explorer_policy.json
 }

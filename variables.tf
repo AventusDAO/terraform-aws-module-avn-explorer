@@ -6,7 +6,7 @@ variable "environment" {
 variable "monitoring_sns_topic" {
   description = "Monitoring SNS Topic list"
   type        = list(string)
-  default     = []
+  default     = null
 }
 
 variable "vpc_settings" {
@@ -17,17 +17,138 @@ variable "vpc_settings" {
   )
 }
 
+variable "explorer_components" {
+  description = "AvN Explorer Components"
+  type = object(
+    {
+      archive = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      balances = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      fees = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      staking = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      summary = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      tokens = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      search = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      search-server = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      errors = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      nft = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      solochain-archive = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      solochain-search = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      account-monitor = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+      nuke = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
+  })
+}
+
 variable "db_settings" {
   description = "RDS db settings"
   type = object({
-    db_subnet_group_name = string
-    name                 = optional(string, "avn-explorer")
-    create_cluster       = optional(bool, true)
-    engine               = optional(string, "aurora-postgresql")
-    engine_version       = optional(string, "14.10")
-    ca_cert_identifier   = optional(string, "rds-ca-rsa2048-g1")
-    family               = optional(string, "aurora-postgresql14")
-    security_group_ids   = list(string)
+    db_subnet_group_name    = string
+    name                    = optional(string, "avn-explorer")
+    create_cluster          = optional(bool, true)
+    engine                  = optional(string, "aurora-postgresql")
+    engine_version          = optional(string, "16.2")
+    ca_cert_identifier      = optional(string, "rds-ca-rsa2048-g1")
+    family                  = optional(string, "aurora-postgresql16")
+    kms_key_id              = optional(string, null)
+    allowed_security_groups = optional(list(string), [])
+    allowed_cidr_blocks     = optional(list(string), [])
     instances = optional(any,
       {
         1 = {
@@ -65,6 +186,40 @@ variable "db_settings" {
     ])
     }
   )
+}
+
+variable "opensearch_settings" {
+  description = "Opensearch Settings"
+  type = object({
+    enabled                    = optional(bool, true)
+    name                       = optional(string, "explorer")
+    subnet_ids                 = list(string)
+    zone_awareness_enabled     = optional(bool, false)
+    engine_version             = optional(string, "OpenSearch_2.3")
+    instance_type              = optional(string, "m6g.large.search")
+    instance_count             = optional(number, 1)
+    ebs_volume_size            = optional(number, 100)
+    ebs_iops                   = optional(number, 3000)
+    ebs_volume_type            = optional(string, "gp3")
+    encrypt_at_rest_enabled    = optional(bool, true)
+    encrypt_at_rest_kms_key_id = optional(string, "")
+    allowed_security_groups    = optional(list(string), [])
+  })
+
+  default = {
+    enabled                 = true
+    name                    = "explorer"
+    subnet_ids              = []
+    zone_awareness_enabled  = false
+    engine_version          = "OpenSearch_2.3"
+    instance_type           = "m6g.large.search"
+    instance_count          = 1
+    ebs_volume_size         = 100
+    ebs_iops                = 3000
+    ebs_volume_type         = "gp3"
+    encrypt_at_rest_enabled = true
+    allowed_security_groups = []
+  }
 }
 
 variable "eks_iam_role_settings" {
