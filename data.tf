@@ -1,6 +1,6 @@
 
 data "aws_caller_identity" "this" {}
-data "aws_region" "current" {}
+data "aws_region" "this" {}
 
 data "aws_iam_policy_document" "this" {
   statement {
