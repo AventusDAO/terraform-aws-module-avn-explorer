@@ -43,6 +43,7 @@ module "db" {
 
 module "monitoring" {
   source = "git@github.com:Aventus-Network-Services/terraform-aws-rds-monitoring?ref=v0.1.0"
+  count  = var.monitoring_sns_topic != null ? 1 : 0
 
   sns_topic         = var.monitoring_sns_topic
   alarm_name_prefix = "${title(var.environment)}-${each.key}"

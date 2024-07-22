@@ -6,7 +6,7 @@ variable "environment" {
 variable "monitoring_sns_topic" {
   description = "Monitoring SNS Topic list"
   type        = list(string)
-  default     = []
+  default     = null
 }
 
 variable "vpc_settings" {
@@ -15,6 +15,110 @@ variable "vpc_settings" {
     vpc_id = string
     }
   )
+}
+
+variable "explorer_components" {
+  description = "AvN Explorer Components"
+  type = object({
+    archive = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    balances = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    fees = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    staking = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    summary = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    tokens = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    search = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    search-server = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    errors = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    nft = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    solochain-archive = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    solochain-search = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    account-monitor = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+    nuke = optional({
+      enabled = optional(bool)
+      },
+      {
+        enabled = true
+      }
+    )
+  })
 }
 
 variable "db_settings" {
