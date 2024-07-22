@@ -11,7 +11,7 @@ module "db" {
 
   vpc_id                  = var.vpc_settings.vpc_id
   db_subnet_group_name    = var.db_settings.db_subnet_group_name
-  create_db_subnet_group  = true
+  create_db_subnet_group  = false
   allowed_security_groups = var.db_settings.allowed_security_groups
   allowed_cidr_blocks     = var.db_settings.allowed_cidr_blocks
 
