@@ -139,14 +139,15 @@ variable "explorer_components" {
 variable "db_settings" {
   description = "RDS db settings"
   type = object({
-    db_subnet_group_name = string
-    name                 = optional(string, "avn-explorer")
-    create_cluster       = optional(bool, true)
-    engine               = optional(string, "aurora-postgresql")
-    engine_version       = optional(string, "14.10")
-    ca_cert_identifier   = optional(string, "rds-ca-rsa2048-g1")
-    family               = optional(string, "aurora-postgresql14")
-    security_group_ids   = list(string)
+    db_subnet_group_name    = string
+    name                    = optional(string, "avn-explorer")
+    create_cluster          = optional(bool, true)
+    engine                  = optional(string, "aurora-postgresql")
+    engine_version          = optional(string, "16.2")
+    ca_cert_identifier      = optional(string, "rds-ca-rsa2048-g1")
+    family                  = optional(string, "aurora-postgresql14")
+    allowed_security_groups = optioanl(list(string), [])
+    allowed_cidr_blocks     = optioanl(list(string), [])
     instances = optional(any,
       {
         1 = {
@@ -200,7 +201,7 @@ variable "opensearch_settings" {
     ebs_iops                = optional(number, 3000)
     ebs_volume_type         = optional(string, "gp3")
     encrypt_at_rest_enabled = optional(bool, true)
-    security_groups         = optional(list(string), [])
+    allowed_security_groups = optional(list(string), [])
   })
 
   default = {
@@ -215,7 +216,7 @@ variable "opensearch_settings" {
     ebs_iops                = 3000
     ebs_volume_type         = "gp3"
     encrypt_at_rest_enabled = true
-    security_groups         = []
+    allowed_security_groups = []
   }
 }
 

@@ -9,10 +9,11 @@ module "db" {
   ca_cert_identifier = var.db_settings.ca_cert_identifier
   instances          = var.db_settings.instances
 
-  vpc_id                 = var.vpc_settings.vpc_id
-  db_subnet_group_name   = var.db_settings.db_subnet_group_name
-  create_db_subnet_group = false
-  vpc_security_group_ids = var.db_settings.security_group_ids
+  vpc_id                  = var.vpc_settings.vpc_id
+  db_subnet_group_name    = var.db_settings.db_subnet_group_name
+  create_db_subnet_group  = true
+  allowed_security_groups = var.db_settings.allowed_security_groups
+  allowed_cidr_blocks     = var.db_settings.allowed_cidr_blocks
 
   iam_database_authentication_enabled = var.db_settings.iam_database_authentication_enabled
   create_random_password              = var.db_settings.create_random_password
@@ -120,7 +121,7 @@ module "opensearch" {
   ebs_iops                = var.opensearch_settings.ebs_iops
   ebs_volume_type         = var.opensearch_settings.ebs_volume_type
   encrypt_at_rest_enabled = var.opensearch_settings.encrypt_at_rest_enabled
-  security_groups         = var.opensearch_settings.security_groups
+  security_groups         = var.opensearch_settings.allowed_security_groups
   advanced_options = {
     "rest.action.multi.allow_explicit_index" = "true"
   }
