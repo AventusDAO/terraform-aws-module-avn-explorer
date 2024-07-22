@@ -87,7 +87,10 @@ module "eks_iam_role" {
   ]
   tags = var.tags
 
-  for_each = local.explorer_components
+  for_each = {
+    for k, v in local.explorer_components : k => v
+    if v.enabled
+  }
 }
 
 resource "aws_secretsmanager_secret" "this" {
@@ -96,5 +99,8 @@ resource "aws_secretsmanager_secret" "this" {
   kms_key_id              = var.secret_manager_settings.kms_key_id
   tags                    = var.tags
 
-  for_each = local.explorer_components
+  for_each = {
+    for k, v in local.explorer_components : k => v
+    if v.enabled
+  }
 }

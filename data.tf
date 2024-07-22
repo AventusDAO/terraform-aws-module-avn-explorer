@@ -10,10 +10,14 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = each.value.service_account_name == "nuke" ? [
       for k, v in local.explorer_components : aws_secretsmanager_secret.this[k].arn
+      if v.enabled
       ] : [
       aws_secretsmanager_secret.this[each.key].arn
     ]
   }
 
-  for_each = local.explorer_components
+  for_each = {
+    for k, v in local.explorer_components : k => v
+    if v.enabled
+  }
 }
