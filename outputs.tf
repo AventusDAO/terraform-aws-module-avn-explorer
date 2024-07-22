@@ -7,5 +7,6 @@ output "explorer_components" {
       service_account_role_arn  = module.eks_iam_role[k].service_account_role_arn
       service_account_role_name = module.eks_iam_role[k].service_account_role_name
     }
+    if v.enabled
   })
 }
