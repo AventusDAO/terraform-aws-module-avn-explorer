@@ -110,7 +110,7 @@ module "opensearch" {
   source = "git@github.com:Aventus-Network-Services/terraform-aws-module-opensearch.git?ref=v1.0.0"
 
   name                    = var.opensearch_settings.name
-  enviroment              = local.environment
+  enviroment              = var.environment
   vpc_id                  = var.vpc_settings.vpc_id
   subnet_ids              = var.opensearch_settings.subnet_ids
   zone_awareness_enabled  = var.opensearch_settings.zone_awareness_enabled
