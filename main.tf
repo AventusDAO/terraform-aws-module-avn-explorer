@@ -8,6 +8,7 @@ module "db" {
   engine_version     = var.db_settings.engine_version
   ca_cert_identifier = var.db_settings.ca_cert_identifier
   instances          = var.db_settings.instances
+  kms_key_id         = var.db_settings.kms_key_id
 
   vpc_id                  = var.vpc_settings.vpc_id
   db_subnet_group_name    = var.db_settings.db_subnet_group_name
@@ -109,19 +110,20 @@ resource "aws_secretsmanager_secret" "this" {
 module "opensearch" {
   source = "git@github.com:Aventus-Network-Services/terraform-aws-module-opensearch.git?ref=v1.0.0"
 
-  name                    = var.opensearch_settings.name
-  enviroment              = var.environment
-  vpc_id                  = var.vpc_settings.vpc_id
-  subnet_ids              = var.opensearch_settings.subnet_ids
-  zone_awareness_enabled  = var.opensearch_settings.zone_awareness_enabled
-  engine_version          = var.opensearch_settings.engine_version
-  instance_type           = var.opensearch_settings.instance_type
-  instance_count          = var.opensearch_settings.instance_count
-  ebs_volume_size         = var.opensearch_settings.ebs_volume_size
-  ebs_iops                = var.opensearch_settings.ebs_iops
-  ebs_volume_type         = var.opensearch_settings.ebs_volume_type
-  encrypt_at_rest_enabled = var.opensearch_settings.encrypt_at_rest_enabled
-  security_groups         = var.opensearch_settings.allowed_security_groups
+  name                       = var.opensearch_settings.name
+  enviroment                 = var.environment
+  vpc_id                     = var.vpc_settings.vpc_id
+  subnet_ids                 = var.opensearch_settings.subnet_ids
+  zone_awareness_enabled     = var.opensearch_settings.zone_awareness_enabled
+  engine_version             = var.opensearch_settings.engine_version
+  instance_type              = var.opensearch_settings.instance_type
+  instance_count             = var.opensearch_settings.instance_count
+  ebs_volume_size            = var.opensearch_settings.ebs_volume_size
+  ebs_iops                   = var.opensearch_settings.ebs_iops
+  ebs_volume_type            = var.opensearch_settings.ebs_volume_type
+  encrypt_at_rest_enabled    = var.opensearch_settings.encrypt_at_rest_enabled
+  encrypt_at_rest_kms_key_id = var.opensearch_settings.encrypt_at_rest_kms_key_id
+  security_groups            = var.opensearch_settings.allowed_security_groups
   advanced_options = {
     "rest.action.multi.allow_explicit_index" = "true"
   }
