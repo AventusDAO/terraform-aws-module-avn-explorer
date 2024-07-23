@@ -40,10 +40,10 @@ data "aws_iam_policy_document" "kms" {
 }
 
 data "aws_iam_policy_document" "eks_iam_policy" {
-  source_policy_documents = concat(
+  source_policy_documents = [
     data.aws_iam_policy_document.sm[k].json,
-    var.secret_manager_settings.kms_key_id != null ? [data.aws_iam_policy_document.kms[0].json] : []
-  )
+    var.secret_manager_settings.kms_key_id != null ? data.aws_iam_policy_document.kms[0].json : jsonencode({})
+  ]
 
   for_each = {
     for k, v in local.explorer_components : k => v
