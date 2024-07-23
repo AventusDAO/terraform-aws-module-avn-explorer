@@ -2,7 +2,7 @@
 data "aws_caller_identity" "this" {}
 data "aws_region" "this" {}
 
-data "aws_iam_policy_document" "this" {
+data "aws_iam_policy_document" "sm" {
   statement {
     effect = "Allow"
     actions = [
@@ -22,6 +22,35 @@ data "aws_iam_policy_document" "this" {
     if v.enabled
   }
 }
+
+data "aws_iam_policy_document" "kms" {
+  count = var.secret_manager_settings.kms_key_id != null ? 1 : 0
+
+  statement {
+    actions = [
+      "kms:ReEncrypt",
+      "kms:GenerateDataKey*",
+      "kms:Encrypt",
+      "kms:Decrypt"
+    ]
+    resources = [
+      var.secret_manager_settings.kms_key_id,
+    ]
+  }
+}
+
+data "aws_iam_policy_document" "eks_iam_policy" {
+  source_policy_documents = concat(
+    [data.aws_iam_policy_document.sm[k].json],
+    var.secret_manager_settings.kms_key_id != null ? [data.aws_iam_policy_document.kms[0].json] : []
+  )
+
+  for_each = {
+    for k, v in local.explorer_components : k => v
+    if v.enabled
+  }
+}
+
 
 data "aws_iam_policy_document" "os_explorer_policy" {
   statement {
