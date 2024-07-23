@@ -41,7 +41,7 @@ data "aws_iam_policy_document" "kms" {
 
 data "aws_iam_policy_document" "eks_iam_policy" {
   source_policy_documents = [
-    data.aws_iam_policy_document.sm[k].json,
+    data.aws_iam_policy_document.sm[each.key].json,
     var.secret_manager_settings.kms_key_id != null ? data.aws_iam_policy_document.kms[0].json : jsonencode({})
   ]
 
