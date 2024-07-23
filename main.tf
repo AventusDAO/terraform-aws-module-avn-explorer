@@ -84,7 +84,7 @@ module "eks_iam_role" {
   service_account_name        = each.value.service_account_name
   service_account_namespace   = var.eks_iam_role_settings.service_account_namespace
   aws_iam_policy_document = [
-    data.aws_iam_policy_document.this[each.key].json
+    data.aws_iam_policy_document.eks_iam_policy[each.key].json
   ]
   tags = var.tags
 
