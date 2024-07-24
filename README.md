@@ -20,6 +20,7 @@
 | <a name="module_eks_iam_role"></a> [eks\_iam\_role](#module\_eks\_iam\_role) | cloudposse/eks-iam-role/aws | v2.1.1 |
 | <a name="module_monitoring"></a> [monitoring](#module\_monitoring) | git@github.com:Aventus-Network-Services/terraform-aws-rds-monitoring | v0.1.0 |
 | <a name="module_opensearch"></a> [opensearch](#module\_opensearch) | git@github.com:Aventus-Network-Services/terraform-aws-module-opensearch.git | v1.0.0 |
+| <a name="module_os_monitoring"></a> [os\_monitoring](#module\_os\_monitoring) | git@github.com:Aventus-Network-Services/terraform-aws-module-elasticsearch-cloudwatch-alerts | v1.0.0 |
 
 ## Resources
 
