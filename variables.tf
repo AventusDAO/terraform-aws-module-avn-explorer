@@ -240,6 +240,7 @@ variable "opensearch_settings" {
     name                            = optional(string, "explorer")
     subnet_ids                      = list(string)
     zone_awareness_enabled          = optional(bool, false)
+    availability_zone_count         = optional(number, 2)
     engine_version                  = optional(string, "OpenSearch_2.3")
     instance_type                   = optional(string, "m6g.large.search")
     instance_count                  = optional(number, 1)
@@ -257,6 +258,7 @@ variable "opensearch_settings" {
     name                            = "explorer"
     subnet_ids                      = []
     zone_awareness_enabled          = false
+    availability_zone_count         = 2
     engine_version                  = "OpenSearch_2.3"
     instance_type                   = "m6g.large.search"
     instance_count                  = 1

@@ -115,6 +115,7 @@ module "opensearch" {
   vpc_id                          = var.vpc_settings.vpc_id
   subnet_ids                      = var.opensearch_settings.subnet_ids
   zone_awareness_enabled          = var.opensearch_settings.zone_awareness_enabled
+  availability_zone_count         = var.opensearch_settings.availability_zone_count
   engine_version                  = var.opensearch_settings.engine_version
   instance_type                   = var.opensearch_settings.instance_type
   instance_count                  = var.opensearch_settings.instance_count
