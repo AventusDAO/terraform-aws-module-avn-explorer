@@ -137,7 +137,7 @@ resource "aws_opensearch_domain_policy" "this" {
 }
 
 module "os_monitoring" {
-  source = "git@github.com:Aventus-Network-Services/terraform-aws-module-elasticsearch-cloudwatch-alerts?ref=v1.0.0"
+  source = "git@github.com:Aventus-Network-Services/terraform-aws-module-elasticsearch-cloudwatch-alerts?ref=v1.1.0"
 
   sns_topic                                = var.monitoring_sns_topic
   alarm_name_prefix                        = "${title(var.environment)}-${var.opensearch_settings.name}-"
