@@ -47,7 +47,7 @@ module "monitoring" {
   source = "git@github.com:Aventus-Network-Services/terraform-aws-rds-monitoring?ref=v0.1.0"
 
   sns_topic         = var.monitoring_sns_topic
-  alarm_name_prefix = "${title(var.environment)}-${each.key}"
+  alarm_name_prefix = "${title(var.environment)}-${each.value.id}"
   db_instance_id    = each.value.id
   tags              = var.tags
 
@@ -110,20 +110,22 @@ resource "aws_secretsmanager_secret" "this" {
 module "opensearch" {
   source = "git@github.com:Aventus-Network-Services/terraform-aws-module-opensearch.git?ref=v1.0.0"
 
-  name                       = var.opensearch_settings.name
-  enviroment                 = var.environment
-  vpc_id                     = var.vpc_settings.vpc_id
-  subnet_ids                 = var.opensearch_settings.subnet_ids
-  zone_awareness_enabled     = var.opensearch_settings.zone_awareness_enabled
-  engine_version             = var.opensearch_settings.engine_version
-  instance_type              = var.opensearch_settings.instance_type
-  instance_count             = var.opensearch_settings.instance_count
-  ebs_volume_size            = var.opensearch_settings.ebs_volume_size
-  ebs_iops                   = var.opensearch_settings.ebs_iops
-  ebs_volume_type            = var.opensearch_settings.ebs_volume_type
-  encrypt_at_rest_enabled    = var.opensearch_settings.encrypt_at_rest_enabled
-  encrypt_at_rest_kms_key_id = var.opensearch_settings.encrypt_at_rest_kms_key_id
-  security_groups            = var.opensearch_settings.allowed_security_groups
+  name                            = var.opensearch_settings.name
+  enviroment                      = var.environment
+  vpc_id                          = var.vpc_settings.vpc_id
+  subnet_ids                      = var.opensearch_settings.subnet_ids
+  zone_awareness_enabled          = var.opensearch_settings.zone_awareness_enabled
+  availability_zone_count         = var.opensearch_settings.availability_zone_count
+  engine_version                  = var.opensearch_settings.engine_version
+  instance_type                   = var.opensearch_settings.instance_type
+  instance_count                  = var.opensearch_settings.instance_count
+  ebs_volume_size                 = var.opensearch_settings.ebs_volume_size
+  ebs_iops                        = var.opensearch_settings.ebs_iops
+  ebs_volume_type                 = var.opensearch_settings.ebs_volume_type
+  encrypt_at_rest_enabled         = var.opensearch_settings.encrypt_at_rest_enabled
+  encrypt_at_rest_kms_key_id      = var.opensearch_settings.encrypt_at_rest_kms_key_id
+  node_to_node_encryption_enabled = var.opensearch_settings.node_to_node_encryption_enabled
+  security_groups                 = var.opensearch_settings.allowed_security_groups
   advanced_options = {
     "rest.action.multi.allow_explicit_index" = "true"
   }
