@@ -135,3 +135,14 @@ resource "aws_opensearch_domain_policy" "this" {
   domain_name     = module.opensearch.domain_name
   access_policies = data.aws_iam_policy_document.os_explorer_policy.json
 }
+
+module "os_monitoring" {
+  source = "git@github.com:Aventus-Network-Services/terraform-aws-module-elasticsearch-cloudwatch-alerts?ref=v1.1.0"
+
+  sns_topic                                = var.monitoring_sns_topic
+  alarm_name_prefix                        = "${title(var.environment)}-${var.opensearch_settings.name}-"
+  domain_name                              = module.opensearch.domain_name
+  monitor_cluster_status_is_yellow         = false
+  monitor_free_storage_space_total_too_low = true
+  tags                                     = var.tags
+}

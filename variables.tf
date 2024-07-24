@@ -133,7 +133,52 @@ variable "explorer_components" {
           enabled = true
         }
       )
-  })
+    }
+  )
+  default = {
+    archive = {
+      enabled = true
+    }
+    balances = {
+      enabled = true
+    }
+    fees = {
+      enabled = true
+    }
+    staking = {
+      enabled = true
+    }
+    summary = {
+      enabled = true
+    }
+    tokens = {
+      enabled = true
+    }
+    search = {
+      enabled = true
+    }
+    search-server = {
+      enabled = true
+    }
+    errors = {
+      enabled = true
+    }
+    nft = {
+      enabled = true
+    }
+    solochain-archive = {
+      enabled = true
+    }
+    solochain-search = {
+      enabled = true
+    }
+    account-monitor = {
+      enabled = true
+    }
+    nuke = {
+      enabled = true
+    }
+  }
 }
 
 variable "db_settings" {
