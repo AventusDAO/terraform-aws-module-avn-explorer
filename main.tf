@@ -2,13 +2,15 @@ module "db" {
   source  = "terraform-aws-modules/rds-aurora/aws"
   version = "7.7.1"
 
-  name               = var.db_settings.name
-  create_cluster     = var.db_settings.create_cluster
-  engine             = var.db_settings.engine
-  engine_version     = var.db_settings.engine_version
-  ca_cert_identifier = var.db_settings.ca_cert_identifier
-  instances          = var.db_settings.instances
-  kms_key_id         = var.db_settings.kms_key_id
+  name                        = var.db_settings.name
+  create_cluster              = var.db_settings.create_cluster
+  engine                      = var.db_settings.engine
+  engine_version              = var.db_settings.engine_version
+  ca_cert_identifier          = var.db_settings.ca_cert_identifier
+  instances                   = var.db_settings.instances
+  kms_key_id                  = var.db_settings.kms_key_id
+  allow_major_version_upgrade = var.db_settings.allow_major_version_upgrade
+  auto_minor_version_upgrade  = var.db_settings.auto_minor_version_upgrade
 
   vpc_id                  = var.vpc_settings.vpc_id
   db_subnet_group_name    = var.db_settings.db_subnet_group_name
