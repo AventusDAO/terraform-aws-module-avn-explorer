@@ -105,7 +105,7 @@ resource "aws_db_parameter_group" "blue" {
 ################################################################################
 
 resource "aws_rds_cluster_parameter_group" "green" {
-  count = var.allow_major_version_upgrade && major_migration_upgrade != null ? 1 : 0
+  count = var.allow_major_version_upgrade && var.db_settings.major_migration_upgrade != null ? 1 : 0
 
   name        = local.db_parameter_group_name
   description = "${var.db_settings.name} cluster parameter group"
@@ -133,7 +133,7 @@ resource "aws_rds_cluster_parameter_group" "green" {
 ################################################################################
 
 resource "aws_db_parameter_group" "green" {
-  count = var.allow_major_version_upgrade && major_migration_upgrade != null ? 1 : 0
+  count = var.allow_major_version_upgrade && var.db_settings.major_migration_upgrade != null ? 1 : 0
 
   name        = local.db_parameter_group_name
   description = "${var.db_settings.name} DB parameter group"
