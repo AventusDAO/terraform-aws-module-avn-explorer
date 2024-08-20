@@ -184,16 +184,18 @@ variable "explorer_components" {
 variable "db_settings" {
   description = "RDS db settings"
   type = object({
-    db_subnet_group_name    = string
-    name                    = optional(string, "avn-explorer")
-    create_cluster          = optional(bool, true)
-    engine                  = optional(string, "aurora-postgresql")
-    engine_version          = optional(string, "16.2")
-    ca_cert_identifier      = optional(string, "rds-ca-rsa2048-g1")
-    family                  = optional(string, "aurora-postgresql16")
-    kms_key_id              = optional(string, null)
-    allowed_security_groups = optional(list(string), [])
-    allowed_cidr_blocks     = optional(list(string), [])
+    db_subnet_group_name        = string
+    name                        = optional(string, "avn-explorer")
+    create_cluster              = optional(bool, true)
+    engine                      = optional(string, "aurora-postgresql")
+    engine_version              = optional(string, "16.2")
+    ca_cert_identifier          = optional(string, "rds-ca-rsa2048-g1")
+    family                      = optional(string, "aurora-postgresql16")
+    kms_key_id                  = optional(string, null)
+    allow_major_version_upgrade = optional(bool, false)
+    auto_minor_version_upgrade  = optional(bool, false)
+    allowed_security_groups     = optional(list(string), [])
+    allowed_cidr_blocks         = optional(list(string), [])
     instances = optional(any,
       {
         1 = {
