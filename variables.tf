@@ -195,7 +195,7 @@ variable "db_settings" {
     kms_key_id                  = optional(string, null)
     allow_major_version_upgrade = optional(bool, false)
     auto_minor_version_upgrade  = optional(bool, true)
-    allow_major_migration_upgrade = optional(bool, false)
+    major_version_upgrade       = optional(string, null)
     allowed_security_groups     = optional(list(string), [])
     allowed_cidr_blocks         = optional(list(string), [])
     instances = optional(any,
@@ -302,4 +302,8 @@ variable "tags" {
   description = "A map of tags to add to all resources"
   type        = map(string)
   default     = {}
+}
+
+locals {
+  db_parameter_group_name = try(coalesce(var.db_settings.name, var.db_settings.name), null)
 }
