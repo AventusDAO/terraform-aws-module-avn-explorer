@@ -30,7 +30,7 @@ module "db" {
   db_cluster_parameter_group_description = "${var.db_settings.name} cluster parameter group"
   db_cluster_parameter_group_parameters  = var.db_settings.db_cluster_parameter_group_parameters
 
-  create_db_parameter_group      = true
+  create_db_parameter_group      = var.db_settings.parameter_group_name == null ? true : false
   db_parameter_group_name        = var.db_settings.parameter_group_name == null ? var.db_settings.name : var.db_settings.parameter_group_name
   db_parameter_group_family      = var.db_settings.family
   db_parameter_group_description = "${var.db_settings.name} DB parameter group"
