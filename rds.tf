@@ -36,8 +36,8 @@ module "db" {
   db_parameter_group_description = "${var.db_settings.name} DB parameter group"
   db_parameter_group_parameters  = var.db_settings.db_parameter_group_parameters
 
-  // db_cluster_parameter_group_name = var.allow_major_version_upgrade && var.db_settings.major_migration_upgrade != null ? aws_rds_cluster_parameter_group.green[0].name : aws_db_parameter_group.blue.name
-  // db_parameter_group_name        = var.allow_major_version_upgrade && var.db_settings.major_migration_upgrade != null ? aws_db_parameter_group.green[0].name : aws_db_parameter_group.blue.name
+  // db_cluster_parameter_group_name = var.db_settings.allow_major_version_upgrade && var.db_settings.major_migration_upgrade != null ? aws_rds_cluster_parameter_group.green[0].name : aws_db_parameter_group.blue.name
+  // db_parameter_group_name        = var.db_settings.allow_major_version_upgrade && var.db_settings.major_migration_upgrade != null ? aws_db_parameter_group.green[0].name : aws_db_parameter_group.blue.name
 
   enabled_cloudwatch_logs_exports       = ["postgresql"]
   performance_insights_enabled          = var.db_settings.performance_insights_enabled
@@ -105,7 +105,7 @@ resource "aws_db_parameter_group" "blue" {
 ################################################################################
 
 resource "aws_rds_cluster_parameter_group" "green" {
-  count = var.allow_major_version_upgrade && var.db_settings.major_migration_upgrade != null ? 1 : 0
+  count = var.db_settings.allow_major_version_upgrade && var.db_settings.major_migration_upgrade != null ? 1 : 0
 
   name        = local.db_parameter_group_name
   description = "${var.db_settings.name} cluster parameter group"
@@ -133,7 +133,7 @@ resource "aws_rds_cluster_parameter_group" "green" {
 ################################################################################
 
 resource "aws_db_parameter_group" "green" {
-  count = var.allow_major_version_upgrade && var.db_settings.major_migration_upgrade != null ? 1 : 0
+  count = var.db_settings.allow_major_version_upgrade && var.db_settings.major_migration_upgrade != null ? 1 : 0
 
   name        = local.db_parameter_group_name
   description = "${var.db_settings.name} DB parameter group"
