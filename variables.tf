@@ -193,7 +193,7 @@ variable "db_settings" {
     family                      = optional(string, "aurora-postgresql16")
     kms_key_id                  = optional(string, null)
     allow_major_version_upgrade = optional(bool, false)
-    auto_minor_version_upgrade  = optional(bool, false)
+    auto_minor_version_upgrade  = optional(bool, true)
     allowed_security_groups     = optional(list(string), [])
     allowed_cidr_blocks         = optional(list(string), [])
     instances = optional(any,
