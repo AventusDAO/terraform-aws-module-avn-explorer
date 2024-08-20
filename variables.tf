@@ -187,6 +187,7 @@ variable "db_settings" {
     db_subnet_group_name        = string
     name                        = optional(string, "avn-explorer")
     create_cluster              = optional(bool, true)
+    parameter_group_name        = optional(string, null)
     engine                      = optional(string, "aurora-postgresql")
     engine_version              = optional(string, "16.2")
     ca_cert_identifier          = optional(string, "rds-ca-rsa2048-g1")
