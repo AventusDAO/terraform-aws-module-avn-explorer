@@ -195,6 +195,7 @@ variable "db_settings" {
     kms_key_id                  = optional(string, null)
     allow_major_version_upgrade = optional(bool, false)
     auto_minor_version_upgrade  = optional(bool, true)
+    allow_major_migration_upgrade = optional(bool, false)
     allowed_security_groups     = optional(list(string), [])
     allowed_cidr_blocks         = optional(list(string), [])
     instances = optional(any,

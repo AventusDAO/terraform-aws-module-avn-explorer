@@ -24,14 +24,14 @@ module "db" {
   apply_immediately   = var.db_settings.apply_immediately
   skip_final_snapshot = var.db_settings.skip_final_snapshot
 
-  create_db_cluster_parameter_group      = var.db_settings.parameter_group_name == null ? true : false
-  db_cluster_parameter_group_name        = var.db_settings.parameter_group_name == null ? var.db_settings.name : var.db_settings.parameter_group_name
+  create_db_cluster_parameter_group      = true
+  db_cluster_parameter_group_name        = var.db_settings.name
   db_cluster_parameter_group_family      = var.db_settings.family
   db_cluster_parameter_group_description = "${var.db_settings.name} cluster parameter group"
   db_cluster_parameter_group_parameters  = var.db_settings.db_cluster_parameter_group_parameters
 
-  create_db_parameter_group      = var.db_settings.parameter_group_name == null ? true : false
-  db_parameter_group_name        = var.db_settings.parameter_group_name == null ? var.db_settings.name : var.db_settings.parameter_group_name
+  create_db_parameter_group      = true
+  db_parameter_group_name        = var.db_settings_major_upgrade ? aws_db_parameter_group.migration.name : var.db_settings.name
   db_parameter_group_family      = var.db_settings.family
   db_parameter_group_description = "${var.db_settings.name} DB parameter group"
   db_parameter_group_parameters  = var.db_settings.db_parameter_group_parameters
@@ -43,6 +43,28 @@ module "db" {
   monitoring_interval                   = var.db_settings.monitoring_interval
 
   tags = var.tags
+}
+
+resource "aws_db_parameter_group" "migration" {
+  count = var.db_settings.allow_major_migration_upgrade ? 1 : 0
+
+  name_prefix = "migrate-${var.db_settings.name}"
+  description = "${var.db_settings.name} DB parameter group"
+  family      = var.db_settings.family
+
+  dynamic "parameter" {
+    for_each = var.db_settings.db_parameter_group_parameters
+
+    content {
+      name         = parameter.value.name
+      value        = parameter.value.value
+      apply_method = try(parameter.value.apply_method, "immediate")
+    }
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 module "monitoring" {
