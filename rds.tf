@@ -34,6 +34,13 @@ module "db" {
   monitoring_interval                   = var.db_settings.monitoring_interval
 
   tags = var.tags
+
+  depends_on = [
+    aws_db_parameter_group.blue,
+    aws_db_parameter_group.green,
+    aws_rds_cluster_parameter_group.blue,
+    aws_rds_cluster_parameter_group.green,
+  ]
 }
 
 ################################################################################
