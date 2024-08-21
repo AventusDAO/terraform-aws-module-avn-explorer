@@ -305,5 +305,5 @@ variable "tags" {
 }
 
 locals {
-  db_parameter_group_name = try(coalesce(var.db_settings.name, var.db_settings.name), null)
+  db_parameter_group_name = try(coalesce(var.db_settings.parameter_group_name, var.db_settings.name), null)
 }

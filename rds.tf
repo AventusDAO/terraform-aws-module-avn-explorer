@@ -24,8 +24,8 @@ module "db" {
   apply_immediately   = var.db_settings.apply_immediately
   skip_final_snapshot = var.db_settings.skip_final_snapshot
 
-  db_cluster_parameter_group_name = var.db_settings.allow_major_version_upgrade && var.db_settings.major_version_upgrade != null ? aws_rds_cluster_parameter_group.green[0].name : aws_db_parameter_group.blue.name
-  db_parameter_group_name         = var.db_settings.allow_major_version_upgrade && var.db_settings.major_version_upgrade != null ? aws_db_parameter_group.green[0].name : aws_db_parameter_group.blue.name
+  db_cluster_parameter_group_name = var.db_settings.allow_major_version_upgrade && var.db_settings.major_version_upgrade != null ? aws_rds_cluster_parameter_group.green[0].id : aws_db_parameter_group.blue.id
+  db_parameter_group_name         = var.db_settings.allow_major_version_upgrade && var.db_settings.major_version_upgrade != null ? aws_db_parameter_group.green[0].id : aws_db_parameter_group.blue.id
 
   enabled_cloudwatch_logs_exports       = ["postgresql"]
   performance_insights_enabled          = var.db_settings.performance_insights_enabled
@@ -41,7 +41,8 @@ module "db" {
 ################################################################################
 
 resource "aws_rds_cluster_parameter_group" "blue" {
-  name        = local.db_parameter_group_name
+  name        = null
+  name_prefix = "${local.db_parameter_group_name}-"
   description = "${var.db_settings.name} cluster parameter group"
   family      = var.db_settings.family
 
@@ -67,7 +68,8 @@ resource "aws_rds_cluster_parameter_group" "blue" {
 ################################################################################
 
 resource "aws_db_parameter_group" "blue" {
-  name        = local.db_parameter_group_name
+  name        = null
+  name_prefix = "${local.db_parameter_group_name}-"
   description = "${var.db_settings.name} DB parameter group"
   family      = var.db_settings.family
 
@@ -95,7 +97,8 @@ resource "aws_db_parameter_group" "blue" {
 resource "aws_rds_cluster_parameter_group" "green" {
   count = var.db_settings.major_version_upgrade != null ? 1 : 0
 
-  name        = local.db_parameter_group_name
+  name        = null
+  name_prefix = "${local.db_parameter_group_name}-"
   description = "${var.db_settings.name} cluster parameter group"
   family      = var.db_settings.major_version_upgrade
 
@@ -123,7 +126,8 @@ resource "aws_rds_cluster_parameter_group" "green" {
 resource "aws_db_parameter_group" "green" {
   count = var.db_settings.major_version_upgrade != null ? 1 : 0
 
-  name        = local.db_parameter_group_name
+  name        = null
+  name_prefix = "${local.db_parameter_group_name}-"
   description = "${var.db_settings.name} DB parameter group"
   family      = var.db_settings.major_version_upgrade
 
