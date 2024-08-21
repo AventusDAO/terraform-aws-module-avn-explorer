@@ -25,13 +25,13 @@ module "db" {
   skip_final_snapshot = var.db_settings.skip_final_snapshot
 
   create_db_cluster_parameter_group      = true
-  db_cluster_parameter_group_name        = var.db_settings.allow_major_version_upgrade && var.db_settings.major_migration_upgrade != null ? aws_rds_cluster_parameter_group.green[0].name : var.db_settings.name // aws_db_parameter_group.blue.name
+  db_cluster_parameter_group_name        = var.db_settings.allow_major_version_upgrade && var.db_settings.major_version_upgrade != null ? aws_rds_cluster_parameter_group.green[0].name : var.db_settings.name // aws_db_parameter_group.blue.name
   db_cluster_parameter_group_family      = var.db_settings.family
   db_cluster_parameter_group_description = "${var.db_settings.name} cluster parameter group"
   db_cluster_parameter_group_parameters  = var.db_settings.db_cluster_parameter_group_parameters
 
   create_db_parameter_group      = true
-  db_parameter_group_name        = var.db_settings.allow_major_version_upgrade && var.db_settings.major_migration_upgrade != null ? aws_db_parameter_group.green[0].name : var.db_settings.name // aws_db_parameter_group.blue.name
+  db_parameter_group_name        = var.db_settings.allow_major_version_upgrade && var.db_settings.major_version_upgrade != null ? aws_db_parameter_group.green[0].name : var.db_settings.name // aws_db_parameter_group.blue.name
   db_parameter_group_family      = var.db_settings.family
   db_parameter_group_description = "${var.db_settings.name} DB parameter group"
   db_parameter_group_parameters  = var.db_settings.db_parameter_group_parameters
