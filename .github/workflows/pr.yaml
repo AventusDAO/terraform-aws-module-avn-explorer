@@ -12,6 +12,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v3
+        
       - name: Enable brew
         run: |
           echo "/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
