@@ -130,6 +130,14 @@ resource "random_password" "this" {
   for_each = local.enabled_components
 }
 
+resource "random_password" "credentials" {
+  length           = 16
+  special          = false
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+
+  for_each = local.additional_credentials_config
+}
+
 module "opensearch" {
   source = "git@github.com:Aventus-Network-Services/terraform-aws-module-opensearch.git?ref=v1.0.0"
 
