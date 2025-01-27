@@ -130,12 +130,12 @@ resource "random_password" "this" {
   for_each = local.enabled_components
 }
 
-resource "random_password" "additional_credentials" {
+resource "random_password" "credentials" {
   length           = 16
   special          = false
   override_special = "!#$%&*()-_=+[]{}<>:?"
 
-  for_each = local.enabled_components_additional_credentials
+  for_each = local.additional_credentials_config
 }
 
 module "opensearch" {
