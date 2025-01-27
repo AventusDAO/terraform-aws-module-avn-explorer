@@ -108,6 +108,30 @@ resource "aws_secretsmanager_secret" "this" {
   }
 }
 
+resource "aws_secretsmanager_secret_version" "this" {
+  secret_id     = aws_secretsmanager_secret.this[each.key].id
+  secret_string = jsonencode(each.value.secrets)
+
+  lifecycle {
+    ignore_changes = [secret_string]
+  }
+
+  for_each = {
+    for k, v in local.explorer_components : k => v
+    if v.enabled
+  }
+}
+
+resource "random_password" "this" {
+  length           = 16
+  special          = false
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+
+  for_each = {
+    for k, v in local.explorer_components : k => v
+    if v.enabled
+  }
+}
 
 module "opensearch" {
   source = "git@github.com:Aventus-Network-Services/terraform-aws-module-opensearch.git?ref=v1.0.0"
