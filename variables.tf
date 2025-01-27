@@ -188,7 +188,7 @@ variable "db_settings" {
     name                        = optional(string, "avn-explorer")
     create_cluster              = optional(bool, true)
     engine                      = optional(string, "aurora-postgresql")
-    engine_version              = optional(string, "16.2")
+    engine_version              = optional(string, "16.6")
     ca_cert_identifier          = optional(string, "rds-ca-rsa2048-g1")
     family                      = optional(string, "aurora-postgresql16")
     kms_key_id                  = optional(string, null)
