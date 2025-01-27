@@ -127,10 +127,7 @@ resource "random_password" "this" {
   special          = false
   override_special = "!#$%&*()-_=+[]{}<>:?"
 
-  for_each = {
-    for k, v in local.explorer_components : k => v
-    if v.enabled
-  }
+  for_each = local.enabled_components
 }
 
 module "opensearch" {

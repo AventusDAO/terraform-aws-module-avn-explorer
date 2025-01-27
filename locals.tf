@@ -9,7 +9,7 @@ locals {
         db_name     = "explorer_archive_db"
         db_username = "explorer_archive"
         avn_node    = ""
-        db_password = random_password.this["archive"].result
+        db_password = try(random_password.this["archive"].result, null)
         db_type     = "postgres"
       }
     }
@@ -21,7 +21,7 @@ locals {
         db_port     = module.rds.cluster_port
         db_name     = "explorer_balances_db"
         db_username = "explorer_balances"
-        db_password = random_password.this["balances"].result
+        db_password = try(random_password.this["balances"].result, null)
       }
     }
     fees = {
@@ -32,7 +32,7 @@ locals {
         db_port     = module.rds.cluster_port
         db_name     = "explorer_fees_db"
         db_username = "explorer_fees"
-        db_password = random_password.this["fees"].result
+        db_password = try(random_password.this["fees"].result, null)
       }
     }
     staking = {
@@ -43,7 +43,7 @@ locals {
         db_port     = module.rds.cluster_port
         db_name     = "explorer_staking_db"
         db_username = "explorer_staking"
-        db_password = random_password.this["staking"].result
+        db_password = try(random_password.this["staking"].result, null)
       }
     }
     summary = {
@@ -54,7 +54,7 @@ locals {
         db_port     = module.rds.cluster_port
         db_name     = "explorer_summary_db"
         db_username = "explorer_summary"
-        db_password = random_password.this["summary"].result
+        db_password = try(random_password.this["summary"].result, null)
       }
     }
     tokens = {
@@ -65,7 +65,7 @@ locals {
         db_port     = module.rds.cluster_port
         db_name     = "explorer_tokens_db"
         db_username = "explorer_tokens"
-        db_password = random_password.this["tokens"].result
+        db_password = try(random_password.this["tokens"].result, null)
       }
     }
     search = {
@@ -76,7 +76,7 @@ locals {
         db_port                    = module.rds.cluster_port
         db_name                    = "explorer_search_db"
         db_username                = "explorer_search"
-        db_password                = random_password.this["search"].result
+        db_password                = try(random_password.this["search"].result, null)
         es_url_search              = module.opensearch.domain_endpoint
         es_blocks_index_search     = "blocks"
         es_extrinsics_index_search = "extrinsics"
@@ -101,7 +101,7 @@ locals {
         db_port     = module.rds.cluster_port
         db_name     = "explorer_errors_db"
         db_username = "explorer_errors"
-        db_password = random_password.this["errors"].result
+        db_password = try(random_password.this["errors"].result, null)
       }
     }
     nft = {
@@ -112,7 +112,7 @@ locals {
         db_port     = module.rds.cluster_port
         db_name     = "explorer_nft_db"
         db_username = "explorer_nft"
-        db_password = random_password.this["nft"].result
+        db_password = try(random_password.this["nft"].result, null)
       }
     }
     solochain-archive = {
@@ -123,7 +123,7 @@ locals {
         db_port     = module.rds.cluster_port
         db_name     = "explorer_solochain_archive_db"
         db_username = "explorer_solochain_archive"
-        db_password = random_password.this["solochain-archive"].result
+        db_password = try(random_password.this["solochain-archive"].result, null)
         db_type     = "postgres"
         avn_node    = ""
       }
@@ -136,7 +136,7 @@ locals {
         db_port                    = module.rds.cluster_port
         db_name                    = "explorer_solochain_search_db"
         db_username                = "explorer_solochain_search"
-        db_password                = random_password.this["solochain-search"].result
+        db_password                = try(random_password.this["solochain-search"].result, null)
         es_url_search              = module.opensearch.domain_endpoint
         es_blocks_index_search     = "blocks"
         es_extrinsics_index_search = "extrinsics"
@@ -151,12 +151,22 @@ locals {
         db_port     = module.rds.cluster_port
         db_name     = "explorer_account_monitor_db"
         db_username = "explorer_account_monitor"
-        db_password = random_password.this["account-monitor"].result
+        db_password = try(random_password.this["account-monitor"].result, null)
       }
     }
     nuke = {
       service_account_name = "nuke"
       enabled              = var.explorer_components.nuke.enabled
+      secrets = {
+        db_hostname = module.rds.cluster_endpoint
+        db_port     = module.rds.cluster_port
+      }
     }
   }
+
+  enabled_components = {
+    for k, v in var.explorer_components : k => k
+    if v.enabled
+  }
 }
+
