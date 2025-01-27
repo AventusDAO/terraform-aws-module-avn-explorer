@@ -87,7 +87,7 @@ locals {
       service_account_name = "search-server"
       enabled              = var.explorer_components.search-server.enabled
       secrets = {
-        es_url_search              = module.opensearch.opensearch_endpoint
+        es_url_search              = module.opensearch.domain_endpoint
         es_blocks_index_search     = "blocks"
         es_extrinsics_index_search = "extrinsics"
         es_events_index_search     = "events"
