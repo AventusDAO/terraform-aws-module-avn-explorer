@@ -253,6 +253,7 @@ variable "opensearch_settings" {
     encrypt_at_rest_kms_key_id      = optional(string, "")
     node_to_node_encryption_enabled = optional(bool, false)
     allowed_security_groups         = optional(list(string), [])
+    create_iam_service_linked_role  = optional(bool, true)
   })
 
   default = {
@@ -270,6 +271,7 @@ variable "opensearch_settings" {
     encrypt_at_rest_enabled         = true
     node_to_node_encryption_enabled = false
     allowed_security_groups         = []
+    create_iam_service_linked_role  = true
   }
 }
 

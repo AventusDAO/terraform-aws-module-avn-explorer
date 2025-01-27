@@ -149,6 +149,7 @@ module "opensearch" {
   encrypt_at_rest_kms_key_id      = var.opensearch_settings.encrypt_at_rest_kms_key_id
   node_to_node_encryption_enabled = var.opensearch_settings.node_to_node_encryption_enabled
   security_groups                 = var.opensearch_settings.allowed_security_groups
+  create_iam_service_linked_role  = var.opensearch_settings.create_iam_service_linked_role
   advanced_options = {
     "rest.action.multi.allow_explicit_index" = "true"
   }
