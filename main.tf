@@ -108,6 +108,27 @@ resource "aws_secretsmanager_secret" "this" {
   }
 }
 
+resource "aws_secretsmanager_secret_version" "this" {
+  secret_id     = aws_secretsmanager_secret.this[each.key].id
+  secret_string = jsonencode(each.value.secrets)
+
+  lifecycle {
+    ignore_changes = [secret_string]
+  }
+
+  for_each = {
+    for k, v in local.explorer_components : k => v
+    if v.enabled
+  }
+}
+
+resource "random_password" "this" {
+  length           = 16
+  special          = false
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+
+  for_each = local.enabled_components
+}
 
 module "opensearch" {
   source = "git@github.com:Aventus-Network-Services/terraform-aws-module-opensearch.git?ref=v1.0.0"
@@ -128,6 +149,7 @@ module "opensearch" {
   encrypt_at_rest_kms_key_id      = var.opensearch_settings.encrypt_at_rest_kms_key_id
   node_to_node_encryption_enabled = var.opensearch_settings.node_to_node_encryption_enabled
   security_groups                 = var.opensearch_settings.allowed_security_groups
+  create_iam_service_linked_role  = var.opensearch_settings.create_iam_service_linked_role
   advanced_options = {
     "rest.action.multi.allow_explicit_index" = "true"
   }
