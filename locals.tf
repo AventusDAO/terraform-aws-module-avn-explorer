@@ -1,11 +1,12 @@
 locals {
   explorer_components = {
     archive = {
-      service_account_name = "archive"
-      enabled              = var.explorer_components.archive.enabled
+      service_account_name   = "archive"
+      enabled                = var.explorer_components.archive.enabled
+      additional_credentials = false
       secrets = {
         db_hostname = module.db.cluster_endpoint
-        db_port     = module.db.cluster_port
+        db_port     = tostring(module.db.cluster_port)
         db_name     = "explorer_archive_db"
         db_username = "explorer_archive"
         avn_node    = ""
@@ -14,66 +15,74 @@ locals {
       }
     }
     balances = {
-      service_account_name = "balances"
-      enabled              = var.explorer_components.balances.enabled
+      service_account_name   = "balances"
+      enabled                = var.explorer_components.balances.enabled
+      additional_credentials = true
       secrets = {
-        db_hostname = module.db.cluster_endpoint
-        db_port     = module.db.cluster_port
-        db_name     = "explorer_balances_db"
-        db_username = "explorer_balances"
-        db_password = try(random_password.this["balances"].result, null)
+        db_hostname          = module.db.cluster_endpoint
+        db_port              = tostring(module.db.cluster_port)
+        db_name              = "explorer_balances_db"
+        db_username          = "explorer_balances"
+        db_password          = try(random_password.this["balances"].result, null)
+        admin_porta_user     = "explorer_ro"
+        admin_porta_password = try(random_password.additional_credentials["balances"].result, null)
       }
     }
     fees = {
-      service_account_name = "fees"
-      enabled              = var.explorer_components.fees.enabled
+      service_account_name   = "fees"
+      enabled                = var.explorer_components.fees.enabled
+      additional_credentials = false
       secrets = {
         db_hostname = module.db.cluster_endpoint
-        db_port     = module.db.cluster_port
+        db_port     = tostring(module.db.cluster_port)
         db_name     = "explorer_fees_db"
         db_username = "explorer_fees"
         db_password = try(random_password.this["fees"].result, null)
       }
     }
     staking = {
-      service_account_name = "staking"
-      enabled              = var.explorer_components.staking.enabled
+      service_account_name   = "staking"
+      enabled                = var.explorer_components.staking.enabled
+      additional_credentials = false
       secrets = {
         db_hostname = module.db.cluster_endpoint
-        db_port     = module.db.cluster_port
+        db_port     = tostring(module.db.cluster_port)
         db_name     = "explorer_staking_db"
         db_username = "explorer_staking"
         db_password = try(random_password.this["staking"].result, null)
       }
     }
     summary = {
-      service_account_name = "summary"
-      enabled              = var.explorer_components.summary.enabled
+      service_account_name   = "summary"
+      enabled                = var.explorer_components.summary.enabled
+      additional_credentials = false
       secrets = {
         db_hostname = module.db.cluster_endpoint
-        db_port     = module.db.cluster_port
+        db_port     = tostring(module.db.cluster_port)
         db_name     = "explorer_summary_db"
         db_username = "explorer_summary"
         db_password = try(random_password.this["summary"].result, null)
       }
     }
     tokens = {
-      service_account_name = "tokens"
-      enabled              = var.explorer_components.tokens.enabled
+      service_account_name   = "tokens"
+      enabled                = var.explorer_components.tokens.enabled
+      additional_credentials = false
       secrets = {
         db_hostname = module.db.cluster_endpoint
-        db_port     = module.db.cluster_port
+        db_port     = tostring(module.db.cluster_port)
         db_name     = "explorer_tokens_db"
         db_username = "explorer_tokens"
         db_password = try(random_password.this["tokens"].result, null)
       }
     }
     search = {
-      service_account_name = "search"
-      enabled              = var.explorer_components.search.enabled
+      service_account_name   = "search"
+      enabled                = var.explorer_components.search.enabled
+      additional_credentials = false
       secrets = {
         db_hostname                = module.db.cluster_endpoint
-        db_port                    = module.db.cluster_port
+        db_port                    = tostring(module.db.cluster_port)
         db_name                    = "explorer_search_db"
         db_username                = "explorer_search"
         db_password                = try(random_password.this["search"].result, null)
@@ -84,8 +93,9 @@ locals {
       }
     }
     search-server = {
-      service_account_name = "search-server"
-      enabled              = var.explorer_components.search-server.enabled
+      service_account_name   = "search-server"
+      enabled                = var.explorer_components.search-server.enabled
+      additional_credentials = false
       secrets = {
         es_url_search              = module.opensearch.domain_endpoint
         es_blocks_index_search     = "blocks"
@@ -94,33 +104,36 @@ locals {
       }
     }
     errors = {
-      service_account_name = "errors"
-      enabled              = var.explorer_components.errors.enabled
+      service_account_name   = "errors"
+      enabled                = var.explorer_components.errors.enabled
+      additional_credentials = false
       secrets = {
         db_hostname = module.db.cluster_endpoint
-        db_port     = module.db.cluster_port
+        db_port     = tostring(module.db.cluster_port)
         db_name     = "explorer_errors_db"
         db_username = "explorer_errors"
         db_password = try(random_password.this["errors"].result, null)
       }
     }
     nft = {
-      service_account_name = "nft"
-      enabled              = var.explorer_components.nft.enabled
+      service_account_name   = "nft"
+      enabled                = var.explorer_components.nft.enabled
+      additional_credentials = false
       secrets = {
         db_hostname = module.db.cluster_endpoint
-        db_port     = module.db.cluster_port
+        db_port     = tostring(module.db.cluster_port)
         db_name     = "explorer_nft_db"
         db_username = "explorer_nft"
         db_password = try(random_password.this["nft"].result, null)
       }
     }
     solochain-archive = {
-      service_account_name = "solo-archive"
-      enabled              = var.explorer_components.solochain-archive.enabled
+      service_account_name   = "solo-archive"
+      enabled                = var.explorer_components.solochain-archive.enabled
+      additional_credentials = false
       secrets = {
         db_hostname = module.db.cluster_endpoint
-        db_port     = module.db.cluster_port
+        db_port     = tostring(module.db.cluster_port)
         db_name     = "explorer_solochain_archive_db"
         db_username = "explorer_solochain_archive"
         db_password = try(random_password.this["solochain-archive"].result, null)
@@ -129,8 +142,9 @@ locals {
       }
     }
     solochain-search = {
-      service_account_name = "solo-search"
-      enabled              = var.explorer_components.solochain-search.enabled
+      service_account_name   = "solo-search"
+      enabled                = var.explorer_components.solochain-search.enabled
+      additional_credentials = false
       secrets = {
         db_hostname                = module.db.cluster_endpoint
         db_port                    = module.db.cluster_port
@@ -144,19 +158,21 @@ locals {
       }
     }
     account-monitor = {
-      service_account_name = "account-mon"
-      enabled              = var.explorer_components.account-monitor.enabled
+      service_account_name   = "account-mon"
+      enabled                = var.explorer_components.account-monitor.enabled
+      additional_credentials = false
       secrets = {
         db_hostname = module.db.cluster_endpoint
-        db_port     = module.db.cluster_port
+        db_port     = tostring(module.db.cluster_port)
         db_name     = "explorer_account_monitor_db"
         db_username = "explorer_account_monitor"
         db_password = try(random_password.this["account-monitor"].result, null)
       }
     }
     nuke = {
-      service_account_name = "nuke"
-      enabled              = var.explorer_components.nuke.enabled
+      service_account_name   = "nuke"
+      enabled                = var.explorer_components.nuke.enabled
+      additional_credentials = false
       secrets = {
         db_hostname = module.db.cluster_endpoint
         db_port     = module.db.cluster_port
@@ -167,5 +183,10 @@ locals {
   enabled_components = {
     for k, v in var.explorer_components : k => k
     if v.enabled
+  }
+
+  enabled_components_additional_credentials = {
+    for k, v in var.explorer_components : k => k
+    if v.enabled && v.additional_credentials
   }
 }
