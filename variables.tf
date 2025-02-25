@@ -125,6 +125,14 @@ variable "explorer_components" {
           enabled = true
         }
       )
+      node-manager = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
       nuke = optional(
         object({
           enabled = optional(bool)
