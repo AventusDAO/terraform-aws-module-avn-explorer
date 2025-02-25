@@ -175,6 +175,9 @@ variable "explorer_components" {
     account-monitor = {
       enabled = true
     }
+    node-manager = {
+      enabled = true
+    }
     nuke = {
       enabled = true
     }

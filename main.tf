@@ -77,7 +77,7 @@ resource "aws_secretsmanager_secret_version" "rds" {
 #
 module "eks_iam_role" {
   source  = "cloudposse/eks-iam-role/aws"
-  version = "v2.1.1"
+  version = "v2.2.1"
 
   environment                 = var.environment
   name                        = "${var.eks_iam_role_settings.prefix}-${each.value.service_account_name}-sa"
