@@ -145,6 +145,17 @@ locals {
         es_events_index_search     = "events"
       }
     }
+    node-manager = {
+      service_account_name = "node-manager"
+      enabled              = var.explorer_components.node-manager.enabled
+      secrets = {
+        db_hostname = module.db.cluster_endpoint
+        db_port     = tostring(module.db.cluster_port)
+        db_name     = "explorer_node_manager_db"
+        db_username = "explorer_node_manager"
+        db_password = try(random_password.this["node-manager"].result, null)
+      }
+    }
     account-monitor = {
       service_account_name = "account-mon"
       enabled              = var.explorer_components.account-monitor.enabled

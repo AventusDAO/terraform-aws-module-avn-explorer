@@ -125,6 +125,14 @@ variable "explorer_components" {
           enabled = true
         }
       )
+      node-manager = optional(
+        object({
+          enabled = optional(bool)
+        }),
+        {
+          enabled = true
+        }
+      )
       nuke = optional(
         object({
           enabled = optional(bool)
@@ -173,6 +181,9 @@ variable "explorer_components" {
       enabled = true
     }
     account-monitor = {
+      enabled = true
+    }
+    node-manager = {
       enabled = true
     }
     nuke = {
