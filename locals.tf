@@ -8,7 +8,7 @@ locals {
         db_port     = tostring(module.db.cluster_port)
         db_name     = "explorer_archive_db"
         db_username = "explorer_archive"
-        avn_node    = ""
+        avn_node    = "wss://"
         db_password = try(random_password.this["archive"].result, null)
         db_type     = "postgres"
       }
@@ -89,7 +89,7 @@ locals {
       service_account_name = "search-server"
       enabled              = var.explorer_components.search-server.enabled
       secrets = {
-        es_url_search              = module.opensearch.domain_endpoint
+        es_url_search              = "https://${module.opensearch.domain_endpoint}"
         es_blocks_index_search     = "blocks"
         es_extrinsics_index_search = "extrinsics"
         es_events_index_search     = "events"
@@ -139,7 +139,7 @@ locals {
         db_name                    = "explorer_solochain_search_db"
         db_username                = "explorer_solochain_search"
         db_password                = try(random_password.this["solochain-search"].result, null)
-        es_url_search              = module.opensearch.domain_endpoint
+        es_url_search              = "https://${module.opensearch.domain_endpoint}"
         es_blocks_index_search     = "blocks"
         es_extrinsics_index_search = "extrinsics"
         es_events_index_search     = "events"
