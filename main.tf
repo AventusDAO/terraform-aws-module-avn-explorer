@@ -94,6 +94,12 @@ module "eks_iam_role" {
     for k, v in local.explorer_components : k => v
     if v.enabled
   }
+
+    lifecycle {
+    ignore_changes = [
+      assume_role_policy
+    ]
+  }
 }
 
 resource "aws_secretsmanager_secret" "this" {
