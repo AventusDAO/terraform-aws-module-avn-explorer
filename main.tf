@@ -94,7 +94,6 @@ module "eks_iam_role" {
     for k, v in local.explorer_components : k => v
     if v.enabled
   }
-  }
 }
 
 resource "aws_secretsmanager_secret" "this" {
