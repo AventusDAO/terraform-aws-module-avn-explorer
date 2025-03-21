@@ -9,10 +9,7 @@ data "aws_iam_policy_document" "sm" {
       "secretsmanager:GetSecretValue",
       "secretsmanager:DescribeSecret",
     ]
-    resources = each.value.service_account_name == "nuke" ? [
-      for k, v in local.explorer_components : aws_secretsmanager_secret.this[k].arn
-      if v.enabled
-      ] : [
+    resources = [
       aws_secretsmanager_secret.this[each.key].arn
     ]
   }

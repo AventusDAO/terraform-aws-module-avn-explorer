@@ -85,13 +85,15 @@ module "eks_iam_role" {
   eks_cluster_oidc_issuer_url = var.eks_iam_role_settings.eks_cluster_oidc_issuer_url
   service_account_name        = each.value.service_account_name
   service_account_namespace   = var.eks_iam_role_settings.service_account_namespace
-  aws_iam_policy_document = data.aws_iam_policy_document.eks_iam_policy[each.key].json
-
+  aws_iam_policy_document = [
+    data.aws_iam_policy_document.eks_iam_policy[each.key].json
+  ]
   tags = var.tags
 
   for_each = {
     for k, v in local.explorer_components : k => v
     if v.enabled
+  }
   }
 }
 
