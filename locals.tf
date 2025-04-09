@@ -172,7 +172,7 @@ locals {
       enabled              = var.explorer_components.nuke.enabled
       secrets = {
         db_hostname = module.db.cluster_endpoint
-        db_port     = module.db.cluster_port
+        db_port     = tostring(module.db.cluster_port)
       }
     }
   }
