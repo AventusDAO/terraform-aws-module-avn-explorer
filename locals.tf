@@ -135,7 +135,7 @@ locals {
       enabled              = var.explorer_components.solochain-search.enabled
       secrets = {
         db_hostname                = module.db.cluster_endpoint
-        db_port                    = module.db.cluster_port
+        db_port                    = tostring(module.db.cluster_port)
         db_name                    = "explorer_solochain_search_db"
         db_username                = "explorer_solochain_search"
         db_password                = try(random_password.this["solochain-search"].result, null)
@@ -172,7 +172,7 @@ locals {
       enabled              = var.explorer_components.nuke.enabled
       secrets = {
         db_hostname = module.db.cluster_endpoint
-        db_port     = module.db.cluster_port
+        db_port     = tostring(module.db.cluster_port)
       }
     }
   }
