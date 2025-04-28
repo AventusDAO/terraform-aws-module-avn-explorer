@@ -7,8 +7,8 @@ on:
 
 jobs:
   github-release:
-    uses: Aventus-Network-Services/Infra-scripts/.github/workflows/automatic-releases.yaml@v5.1.0
+    uses: Aventus-Network-Services/shared-workflows/.github/workflows/automatic-releases.yaml@v5.9.0
     with:
-      default_bump: patch
+      default_bump: minor
     secrets:
       envPat: ${{ secrets.GITHUB_TOKEN }}

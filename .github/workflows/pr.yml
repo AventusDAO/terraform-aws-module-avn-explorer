@@ -1,0 +1,14 @@
+name: Check PR
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check:
+    uses: Aventus-Network-Services/shared-workflows/.github/workflows/check-workflow.yml@v5.9.0
+
+  terraform-docs-validate:
+    needs: [check]
+    uses: Aventus-Network-Services/shared-workflows/.github/workflows/terraform-docs-workflow.yml@v5.9.0
