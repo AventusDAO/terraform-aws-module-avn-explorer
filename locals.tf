@@ -156,6 +156,17 @@ locals {
         db_password = try(random_password.this["node-manager"].result, null)
       }
     }
+    assets = {
+      service_account_name = "assets"
+      enabled              = var.explorer_components.assets.enabled
+      secrets = {
+        db_hostname = module.db.cluster_endpoint
+        db_port     = tostring(module.db.cluster_port)
+        db_name     = "explorer_assets_db"
+        db_username = "explorer_assets"
+        db_password = try(random_password.this["assets"].result, null)
+      }
+    }
     account-monitor = {
       service_account_name = "account-mon"
       enabled              = var.explorer_components.account-monitor.enabled
