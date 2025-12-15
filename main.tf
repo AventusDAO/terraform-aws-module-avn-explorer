@@ -46,7 +46,7 @@ module "db" {
 }
 
 module "monitoring" {
-  source = "git@github.com:Aventus-Network-Services/terraform-aws-rds-monitoring?ref=v0.1.0"
+  source = "git@github.com:AventusDAO/terraform-aws-rds-monitoring?ref=v0.1.0"
 
   sns_topic         = var.monitoring_sns_topic
   alarm_name_prefix = "${title(var.environment)}-${each.value.id}"
@@ -139,7 +139,7 @@ resource "random_password" "credentials" {
 }
 
 module "opensearch" {
-  source = "git@github.com:Aventus-Network-Services/terraform-aws-module-opensearch.git?ref=v1.0.0"
+  source = "git@github.com:AventusDAO/terraform-aws-module-opensearch.git?ref=v1.0.0"
 
   name                            = var.opensearch_settings.name
   enviroment                      = var.environment
@@ -171,7 +171,7 @@ resource "aws_opensearch_domain_policy" "this" {
 }
 
 module "os_monitoring" {
-  source = "git@github.com:Aventus-Network-Services/terraform-aws-module-elasticsearch-cloudwatch-alerts?ref=v1.1.0"
+  source = "git@github.com:AventusDAO/terraform-aws-module-elasticsearch-cloudwatch-alerts?ref=v1.1.0"
 
   sns_topic                                = var.monitoring_sns_topic
   alarm_name_prefix                        = "${title(var.environment)}-${var.opensearch_settings.name}-"

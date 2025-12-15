@@ -20,9 +20,9 @@
 |------|--------|---------|
 | <a name="module_db"></a> [db](#module\_db) | terraform-aws-modules/rds-aurora/aws | 7.7.1 |
 | <a name="module_eks_iam_role"></a> [eks\_iam\_role](#module\_eks\_iam\_role) | cloudposse/eks-iam-role/aws | v2.2.1 |
-| <a name="module_monitoring"></a> [monitoring](#module\_monitoring) | git@github.com:Aventus-Network-Services/terraform-aws-rds-monitoring | v0.1.0 |
-| <a name="module_opensearch"></a> [opensearch](#module\_opensearch) | git@github.com:Aventus-Network-Services/terraform-aws-module-opensearch.git | v1.0.0 |
-| <a name="module_os_monitoring"></a> [os\_monitoring](#module\_os\_monitoring) | git@github.com:Aventus-Network-Services/terraform-aws-module-elasticsearch-cloudwatch-alerts | v1.1.0 |
+| <a name="module_monitoring"></a> [monitoring](#module\_monitoring) | git@github.com:AventusDAO/terraform-aws-rds-monitoring | v0.1.0 |
+| <a name="module_opensearch"></a> [opensearch](#module\_opensearch) | git@github.com:AventusDAO/terraform-aws-module-opensearch.git | v1.0.0 |
+| <a name="module_os_monitoring"></a> [os\_monitoring](#module\_os\_monitoring) | git@github.com:AventusDAO/terraform-aws-module-elasticsearch-cloudwatch-alerts | v1.1.0 |
 
 ## Resources
 
