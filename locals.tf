@@ -186,6 +186,17 @@ locals {
         db_port     = tostring(module.db.cluster_port)
       }
     }
+    alerts = {
+      service_account_name = "alerts"
+      enabled              = var.explorer_components.alerts.enabled
+      secrets = {
+        db_hostname = module.db.cluster_endpoint
+        db_port     = tostring(module.db.cluster_port)
+        db_name     = "explorer_alerts_db"
+        db_username = "explorer_alerts"
+        db_password = try(random_password.this["alerts"].result, null)
+      }
+    }
   }
 
   additional_credentials_config = {

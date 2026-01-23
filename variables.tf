@@ -23,7 +23,7 @@ variable "explorer_components" {
     {
       archive = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -31,7 +31,7 @@ variable "explorer_components" {
       )
       balances = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -39,7 +39,7 @@ variable "explorer_components" {
       )
       fees = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -47,7 +47,7 @@ variable "explorer_components" {
       )
       staking = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -55,7 +55,7 @@ variable "explorer_components" {
       )
       summary = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -63,7 +63,7 @@ variable "explorer_components" {
       )
       tokens = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -71,7 +71,7 @@ variable "explorer_components" {
       )
       search = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -79,7 +79,7 @@ variable "explorer_components" {
       )
       search-server = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -87,7 +87,7 @@ variable "explorer_components" {
       )
       errors = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -95,7 +95,7 @@ variable "explorer_components" {
       )
       nft = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -103,7 +103,7 @@ variable "explorer_components" {
       )
       solochain-archive = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -111,7 +111,7 @@ variable "explorer_components" {
       )
       solochain-search = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -119,7 +119,7 @@ variable "explorer_components" {
       )
       account-monitor = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -127,7 +127,7 @@ variable "explorer_components" {
       )
       node-manager = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -135,7 +135,7 @@ variable "explorer_components" {
       )
       assets = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
@@ -143,10 +143,18 @@ variable "explorer_components" {
       )
       nuke = optional(
         object({
-          enabled = optional(bool)
+          enabled = optional(bool, true)
         }),
         {
           enabled = true
+        }
+      )
+      alerts = optional(
+        object({
+          enabled = optional(bool, false)
+        }),
+        {
+          enabled = false
         }
       )
     }
@@ -199,6 +207,9 @@ variable "explorer_components" {
     }
     nuke = {
       enabled = true
+    }
+    alerts = {
+      enabled = false
     }
   }
 }
