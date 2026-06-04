@@ -141,23 +141,25 @@ resource "random_password" "credentials" {
 module "opensearch" {
   source = "git@github.com:AventusDAO/terraform-aws-module-opensearch.git?ref=v2.0.0"
 
-  name                            = var.opensearch_settings.name
-  enviroment                      = var.environment
-  vpc_id                          = var.vpc_settings.vpc_id
-  subnet_ids                      = var.opensearch_settings.subnet_ids
-  zone_awareness_enabled          = var.opensearch_settings.zone_awareness_enabled
-  availability_zone_count         = var.opensearch_settings.availability_zone_count
-  engine_version                  = var.opensearch_settings.engine_version
-  instance_type                   = var.opensearch_settings.instance_type
-  instance_count                  = var.opensearch_settings.instance_count
-  ebs_volume_size                 = var.opensearch_settings.ebs_volume_size
-  ebs_iops                        = var.opensearch_settings.ebs_iops
-  ebs_volume_type                 = var.opensearch_settings.ebs_volume_type
-  encrypt_at_rest_enabled         = var.opensearch_settings.encrypt_at_rest_enabled
-  encrypt_at_rest_kms_key_id      = var.opensearch_settings.encrypt_at_rest_kms_key_id
-  node_to_node_encryption_enabled = var.opensearch_settings.node_to_node_encryption_enabled
-  security_groups                 = var.opensearch_settings.allowed_security_groups
-  create_iam_service_linked_role  = var.opensearch_settings.create_iam_service_linked_role
+  name                                        = var.opensearch_settings.name
+  enviroment                                  = var.environment
+  vpc_id                                      = var.vpc_settings.vpc_id
+  subnet_ids                                  = var.opensearch_settings.subnet_ids
+  zone_awareness_enabled                      = var.opensearch_settings.zone_awareness_enabled
+  availability_zone_count                     = var.opensearch_settings.availability_zone_count
+  engine_version                              = var.opensearch_settings.engine_version
+  instance_type                               = var.opensearch_settings.instance_type
+  instance_count                              = var.opensearch_settings.instance_count
+  ebs_volume_size                             = var.opensearch_settings.ebs_volume_size
+  ebs_iops                                    = var.opensearch_settings.ebs_iops
+  ebs_volume_type                             = var.opensearch_settings.ebs_volume_type
+  encrypt_at_rest_enabled                     = var.opensearch_settings.encrypt_at_rest_enabled
+  encrypt_at_rest_kms_key_id                  = var.opensearch_settings.encrypt_at_rest_kms_key_id
+  node_to_node_encryption_enabled             = var.opensearch_settings.node_to_node_encryption_enabled
+  security_groups                             = var.opensearch_settings.allowed_security_groups
+  create_iam_service_linked_role              = var.opensearch_settings.create_iam_service_linked_role
+  domain_endpoint_options_tls_security_policy = var.opensearch_settings.domain_endpoint_options_tls_security_policy
+
   advanced_options = {
     "rest.action.multi.allow_explicit_index" = "true"
   }

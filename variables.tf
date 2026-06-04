@@ -271,40 +271,42 @@ variable "db_settings" {
 variable "opensearch_settings" {
   description = "Opensearch Settings"
   type = object({
-    enabled                         = optional(bool, true)
-    name                            = optional(string, "explorer")
-    subnet_ids                      = list(string)
-    zone_awareness_enabled          = optional(bool, false)
-    availability_zone_count         = optional(number, 2)
-    engine_version                  = optional(string, "OpenSearch_2.3")
-    instance_type                   = optional(string, "m6g.large.search")
-    instance_count                  = optional(number, 1)
-    ebs_volume_size                 = optional(number, 100)
-    ebs_iops                        = optional(number, 3000)
-    ebs_volume_type                 = optional(string, "gp3")
-    encrypt_at_rest_enabled         = optional(bool, true)
-    encrypt_at_rest_kms_key_id      = optional(string, "")
-    node_to_node_encryption_enabled = optional(bool, false)
-    allowed_security_groups         = optional(list(string), [])
-    create_iam_service_linked_role  = optional(bool, true)
+    enabled                                     = optional(bool, true)
+    name                                        = optional(string, "explorer")
+    subnet_ids                                  = list(string)
+    zone_awareness_enabled                      = optional(bool, false)
+    availability_zone_count                     = optional(number, 2)
+    engine_version                              = optional(string, "OpenSearch_2.3")
+    instance_type                               = optional(string, "m6g.large.search")
+    instance_count                              = optional(number, 1)
+    ebs_volume_size                             = optional(number, 100)
+    ebs_iops                                    = optional(number, 3000)
+    ebs_volume_type                             = optional(string, "gp3")
+    encrypt_at_rest_enabled                     = optional(bool, true)
+    encrypt_at_rest_kms_key_id                  = optional(string, "")
+    node_to_node_encryption_enabled             = optional(bool, false)
+    allowed_security_groups                     = optional(list(string), [])
+    create_iam_service_linked_role              = optional(bool, true)
+    domain_endpoint_options_tls_security_policy = optional(string, "Policy-Min-TLS-1-2-2019-07")
   })
 
   default = {
-    enabled                         = true
-    name                            = "explorer"
-    subnet_ids                      = []
-    zone_awareness_enabled          = false
-    availability_zone_count         = 2
-    engine_version                  = "OpenSearch_2.3"
-    instance_type                   = "m6g.large.search"
-    instance_count                  = 1
-    ebs_volume_size                 = 100
-    ebs_iops                        = 3000
-    ebs_volume_type                 = "gp3"
-    encrypt_at_rest_enabled         = true
-    node_to_node_encryption_enabled = false
-    allowed_security_groups         = []
-    create_iam_service_linked_role  = true
+    enabled                                     = true
+    name                                        = "explorer"
+    subnet_ids                                  = []
+    zone_awareness_enabled                      = false
+    availability_zone_count                     = 2
+    engine_version                              = "OpenSearch_2.3"
+    instance_type                               = "m6g.large.search"
+    instance_count                              = 1
+    ebs_volume_size                             = 100
+    ebs_iops                                    = 3000
+    ebs_volume_type                             = "gp3"
+    encrypt_at_rest_enabled                     = true
+    node_to_node_encryption_enabled             = false
+    allowed_security_groups                     = []
+    create_iam_service_linked_role              = true
+    domain_endpoint_options_tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
   }
 }
 
